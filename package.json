@@ -1,6 +1,6 @@
 {
   "name": "react-native-smarter-list",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "React Native Smarter Lisj",
   "main": "lib/index",
   "scripts": {
@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joedbenjamin/react-native-smart-list"
+    "url": "https://github.com/joedbenjamin/react-native-smarter-list"
   },
   "bugs": {
-    "url": "https://github.com/joedbenjamin/react-native-smart-list/issues"
+    "url": "https://github.com/joedbenjamin/react-native-smarter-list/issues"
   },
-  "homepage": "https://github.com/joedbenjamin/react-native-smart-list",
+  "homepage": "https://github.com/joedbenjamin/react-native-smarter-list",
   "author": "Joe Benjamin",
   "license": "MIT",
   "files": [
