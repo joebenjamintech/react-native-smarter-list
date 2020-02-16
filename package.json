@@ -38,5 +38,13 @@
     "react": "*",
     "react-native": "*"
   },
-  "types": "lib/index.d.ts"
+  "types": "lib/index.d.ts",
+  "keywords": [
+    "react-native",
+    "flatlist",
+    "sectionlist",
+    "react",
+    "list",
+    "smarter"
+  ]
 }
