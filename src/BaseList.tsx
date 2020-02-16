@@ -1,39 +1,19 @@
 import * as React from 'react';
 import { FlatList, SectionList } from 'react-native';
 import { ListProps, MainProps, BaseListProps } from './interfaces';
+import { getFormattedItems } from './utils';
 
 const { useCallback } = React;
-
-const groupBySection = (arry: any[], key = 'section') =>
-  arry
-    .reduce((accum: any[], curr: any) => {
-      (accum[curr[key]] = accum[curr[key]] || []).push(curr);
-      return accum;
-    }, [])
-    .reduce((accum: any[], curr: any[]) => {
-      accum.push({
-        data: curr,
-        title: curr[0][key].toString(),
-      });
-      return accum;
-    }, []);
-
-const getFormattedItems = ({ items }: any) => {
-  const groupedItems = groupBySection(items);
-  return {
-    groupedItems,
-    nonGroupeditems: items,
-  };
-};
 
 const List: React.SFC<ListProps> = props => {
   const {
     items,
     ItemComponent,
-    ItemSeparatorComponent,
-    SectionHeader,
-    ListEmptyComponent,
+    ItemSeparatorComponent = null,
+    SectionHeader = null,
+    ListEmptyComponent = null,
   } = props;
+
   const { groupedItems, nonGroupeditems } = getFormattedItems({ items });
 
   const Item = useCallback(
@@ -41,17 +21,21 @@ const List: React.SFC<ListProps> = props => {
     [],
   );
 
+  const Section = useCallback(
+    ({ section: { title } }) =>
+      SectionHeader ? <SectionHeader title={title} /> : null,
+    [],
+  );
+
   return groupedItems.length > 1 ? (
     <SectionList
-      ItemSeparatorComponent={ItemSeparatorComponent || null}
+      ItemSeparatorComponent={ItemSeparatorComponent}
       sections={groupedItems}
       windowSize={151}
       keyExtractor={(item: any) => item.id}
       renderItem={Item}
       ListEmptyComponent={ListEmptyComponent}
-      renderSectionHeader={({ section: { title } }) =>
-        SectionHeader ? <SectionHeader title={title} /> : null
-      }
+      renderSectionHeader={Section}
     />
   ) : (
     <FlatList
@@ -59,8 +43,8 @@ const List: React.SFC<ListProps> = props => {
       windowSize={151}
       keyExtractor={(item: any) => item.id}
       renderItem={Item}
-      ListEmptyComponent={ListEmptyComponent || null}
-      ItemSeparatorComponent={ItemSeparatorComponent || null}
+      ListEmptyComponent={ListEmptyComponent}
+      ItemSeparatorComponent={ItemSeparatorComponent}
     />
   );
 };
