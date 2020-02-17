@@ -1,56 +1,34 @@
 import * as React from 'react';
 import { FlatList, SectionList } from 'react-native';
-import { ListProps, MainProps, BaseListProps } from './interfaces';
-import { getFormattedItems } from './utils';
+import {
+  ListProps as SmarterListProps,
+  MainProps,
+  BaseListProps,
+} from './interfaces';
 
 const { useCallback } = React;
 
-const List: React.SFC<ListProps> = props => {
-  const {
-    items,
-    ItemComponent,
-    ItemSeparatorComponent = null,
-    SectionHeader = null,
-    ListEmptyComponent = null,
-  } = props;
-
-  const { groupedItems, nonGroupeditems } = getFormattedItems({ items });
+const SmarterList: React.SFC<SmarterListProps> = props => {
+  const { data = [], sections = [], ItemComponent, ListEmptyComponent } = props;
 
   const Item = useCallback(
     ({ item }: any) => <ItemComponent key={item.id} {...item} />,
     [],
   );
 
-  const Section = useCallback(
-    ({ section: { title } }) =>
-      SectionHeader ? <SectionHeader title={title} /> : null,
-    [],
-  );
+  if (!!!data.length && !!!sections.length) {
+    return ListEmptyComponent ? <ListEmptyComponent /> : null;
+  }
 
-  return groupedItems.length > 1 ? (
-    <SectionList
-      ItemSeparatorComponent={ItemSeparatorComponent}
-      sections={groupedItems}
-      windowSize={151}
-      keyExtractor={(item: any) => item.id}
-      renderItem={Item}
-      ListEmptyComponent={ListEmptyComponent}
-      renderSectionHeader={Section}
-    />
+  return !!sections.length ? (
+    <SectionList sections={sections} renderItem={Item} {...props} />
   ) : (
-    <FlatList
-      data={nonGroupeditems}
-      windowSize={151}
-      keyExtractor={(item: any) => item.id}
-      renderItem={Item}
-      ListEmptyComponent={ListEmptyComponent}
-      ItemSeparatorComponent={ItemSeparatorComponent}
-    />
+    <FlatList data={data} renderItem={Item} {...props} />
   );
 };
 
 const BaseList = (baseProps: BaseListProps) => (mainProps: MainProps) => {
-  return <List {...baseProps} {...mainProps} />;
+  return <SmarterList {...baseProps} {...mainProps} />;
 };
 
 export default BaseList;

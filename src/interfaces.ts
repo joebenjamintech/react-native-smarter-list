@@ -1,16 +1,14 @@
-interface Item {
-  id: string | number;
-}
+import { SectionListProps, FlatListProps, SectionListData } from 'react-native';
 
-export interface BaseListProps {
-  ItemSeparatorComponent?: any;
-  ListEmptyComponent?: any;
-  SectionHeader?: any;
-}
+export type BaseListProps =
+  | Partial<SectionListProps<any>>
+  | Partial<FlatListProps<any>>
+  | any;
 
 export interface MainProps {
-  items: Array<Item>;
+  data?: ReadonlyArray<any>;
+  sections?: ReadonlyArray<SectionListData<any>>;
   ItemComponent: any;
 }
 
-export type ListProps = BaseListProps & MainProps;
+export type ListProps = BaseListProps | MainProps;
