@@ -1,7 +1,7 @@
 {
   "name": "react-native-smarter-list",
-  "version": "1.0.11",
-  "description": "React Native Smarter Lisj",
+  "version": "2.0.2",
+  "description": "React Native Smarter List",
   "main": "lib/index",
   "scripts": {
     "prepare": "rm -rf ./lib && tsc && echo \"Finished building NPM package\"",
@@ -45,6 +45,7 @@
     "sectionlist",
     "react",
     "list",
-    "smarter"
+    "smarter",
+    "reusable"
   ]
 }

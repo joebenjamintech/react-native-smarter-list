@@ -11,10 +11,7 @@ const { useCallback } = React;
 const SmarterList: React.SFC<SmarterListProps> = props => {
   const { data = [], sections = [], ItemComponent, ListEmptyComponent } = props;
 
-  const Item = useCallback(
-    ({ item }: any) => <ItemComponent key={item.id} {...item} />,
-    [],
-  );
+  const Item = useCallback(({ item }: any) => <ItemComponent {...item} />, []);
 
   if (!!!data.length && !!!sections.length) {
     return ListEmptyComponent ? <ListEmptyComponent /> : null;
